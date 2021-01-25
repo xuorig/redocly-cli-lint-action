@@ -1,5 +1,5 @@
+import { performance } from 'perf_hooks';
 import { error, info, setFailed, getInput } from '@actions/core';
-
 import { loadConfig, Config, lint, formatProblems } from '@redocly/openapi-core';
 
 import {
@@ -61,7 +61,7 @@ async function run(): Promise<void> {
         const elapsed = getExecutionTime(startedAt);
         info(`${entryPoint}: validated in ${elapsed}\n\n`);
       } catch (e) {
-        error(e.message);
+        setFailed(e.message);
       }
     }
 
