@@ -57,7 +57,7 @@ async function run(): Promise<void> {
           format: format,
           maxProblems: maxProblems,
           totals: fileTotals,
-          version: 'TODO',
+          version: '0.0.1',
         });
 
         const elapsed = getExecutionTime(startedAt);

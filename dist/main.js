@@ -65,7 +65,7 @@ function run() {
                         format: format,
                         maxProblems: maxProblems,
                         totals: fileTotals,
-                        version: 'TODO',
+                        version: '0.0.1',
                     });
                     const elapsed = utils_1.getExecutionTime(startedAt);
                     core_1.info(`${entryPoint}: validated in ${elapsed}\n\n`);
