@@ -13,16 +13,32 @@ import {
 
 import { Totals } from '@redocly/openapi-cli/lib/types';
 
+// Not exported by redocly-cli
+type ErrorFormat = "codeframe" | "stylish" | "json" | undefined;
 
 async function run(): Promise<void> {
   try {
-    const configFile: string = core.getInput('config_file')
+    const configFile: string = core.getInput('config')
     const config: Config = await loadConfig(configFile);
-    const entrypoints = await getFallbackEntryPointsOrExit([], config);
+
+    let entryPoints: Array<string> = [];
+    const entryPointInput: string = core.getInput('entrypoints')
+    if (entryPointInput) {
+      entryPoints = entryPointInput.split(" ")
+    }
+
+    entryPoints = await getFallbackEntryPointsOrExit(entryPoints, config);
+
+    const format = core.getInput('format') as ErrorFormat;
+
+    let maxProblems: number = parseInt(core.getInput('max_problems'));
+    if (isNaN(maxProblems)) {
+      maxProblems = 100;
+    }
 
     const totals: Totals = { errors: 0, warnings: 0, ignored: 0 };
 
-    for (const entryPoint of entrypoints) {
+    for (const entryPoint of entryPoints) {
       try {
         const startedAt = performance.now();
         info(`validating ${entryPoint}...\n`);
@@ -38,8 +54,8 @@ async function run(): Promise<void> {
         totals.ignored += fileTotals.ignored;
 
         formatProblems(results, {
-          format: "codeframe",
-          maxProblems: 100,
+          format: format,
+          maxProblems: maxProblems,
           totals: fileTotals,
           version: 'TODO',
         });
@@ -51,7 +67,7 @@ async function run(): Promise<void> {
       }
     }
 
-    printLintTotals(totals, entrypoints.length);
+    printLintTotals(totals, entryPoints.length);
 
     if (totals.errors > 0) {
       setFailed("Lint failed")

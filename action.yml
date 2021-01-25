@@ -3,12 +3,20 @@ description: Lint OpenAPI documents using Redocly CLI
 author: Marc-Andre Giroux
 inputs:
   entrypoints:
-    required: true
+    required: false
     description: 'Path to OpenAPI entrypoints to lint'
-  config_file:
+  config:
     required: true
-    description: 'Path to redocly linting configuration file'
+    description: 'Path to the redocly configuration file'
     default: '.redocly.yaml'
+  format:
+    required: false
+    description: 'Use a specific output format [choices: "stylish", "codeframe"]'
+    default: 'codeframe'
+  max_problems:
+    required: false
+    description: 'Reduce output to max N problems.'
+    default: '100'
 runs:
   using: 'node12'
   main: 'dist/index.js'
