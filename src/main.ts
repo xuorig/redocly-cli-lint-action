@@ -1,6 +1,4 @@
-import * as core from '@actions/core'
-
-import { error, info, setFailed } from '@actions/core';
+import { error, info, setFailed, getInput } from '@actions/core';
 
 import { loadConfig, Config, lint, formatProblems } from '@redocly/openapi-core';
 
@@ -18,20 +16,20 @@ type ErrorFormat = "codeframe" | "stylish" | "json" | undefined;
 
 async function run(): Promise<void> {
   try {
-    const configFile: string = core.getInput('config')
+    const configFile: string = getInput('config')
     const config: Config = await loadConfig(configFile);
 
     let entryPoints: Array<string> = [];
-    const entryPointInput: string = core.getInput('entrypoints')
+    const entryPointInput: string = getInput('entrypoints')
     if (entryPointInput) {
       entryPoints = entryPointInput.split(" ")
     }
 
     entryPoints = await getFallbackEntryPointsOrExit(entryPoints, config);
 
-    const format = core.getInput('format') as ErrorFormat;
+    const format = getInput('format') as ErrorFormat;
 
-    let maxProblems: number = parseInt(core.getInput('max_problems'));
+    let maxProblems: number = parseInt(getInput('max_problems'));
     if (isNaN(maxProblems)) {
       maxProblems = 100;
     }
