@@ -1,5 +1,5 @@
 import { performance } from 'perf_hooks';
-import { error, info, setFailed, getInput } from '@actions/core';
+import { info, setFailed, getInput } from '@actions/core';
 import { loadConfig, Config, lint, formatProblems } from '@redocly/openapi-core';
 
 import {
@@ -11,7 +11,6 @@ import {
 
 import { Totals } from '@redocly/openapi-cli/lib/types';
 
-// Not exported by redocly-cli
 type ErrorFormat = "codeframe" | "stylish" | "json" | undefined;
 
 async function run(): Promise<void> {

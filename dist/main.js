@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const perf_hooks_1 = require("perf_hooks");
 const core_1 = require("@actions/core");
 const openapi_core_1 = require("@redocly/openapi-core");
 const utils_1 = require("@redocly/openapi-cli/lib/utils");
@@ -31,7 +32,7 @@ function run() {
             const totals = { errors: 0, warnings: 0, ignored: 0 };
             for (const entryPoint of entryPoints) {
                 try {
-                    const startedAt = performance.now();
+                    const startedAt = perf_hooks_1.performance.now();
                     core_1.info(`validating ${entryPoint}...\n`);
                     const results = yield openapi_core_1.lint({
                         ref: entryPoint,
@@ -51,7 +52,7 @@ function run() {
                     core_1.info(`${entryPoint}: validated in ${elapsed}\n\n`);
                 }
                 catch (e) {
-                    core_1.error(e.message);
+                    core_1.setFailed(e.message);
                 }
             }
             utils_1.printLintTotals(totals, entryPoints.length);
