@@ -18,7 +18,7 @@ async function run(): Promise<void> {
     const configFile: string = getInput('config')
     const config: Config = await loadConfig(configFile);
 
-    let entryPoints: Array<string> = [];
+    let entryPoints: string[] = [];
     const entryPointInput: string = getInput('entrypoints')
     if (entryPointInput) {
       entryPoints = entryPointInput.split(" ")
@@ -51,8 +51,8 @@ async function run(): Promise<void> {
         totals.ignored += fileTotals.ignored;
 
         formatProblems(results, {
-          format: format,
-          maxProblems: maxProblems,
+          format,
+          maxProblems,
           totals: fileTotals,
           version: '0.0.1',
         });

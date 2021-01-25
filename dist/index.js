@@ -67,8 +67,8 @@ function run() {
                     totals.warnings += fileTotals.warnings;
                     totals.ignored += fileTotals.ignored;
                     openapi_core_1.formatProblems(results, {
-                        format: format,
-                        maxProblems: maxProblems,
+                        format,
+                        maxProblems,
                         totals: fileTotals,
                         version: '0.0.1',
                     });
