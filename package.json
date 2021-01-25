@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "redocly-cli-lint-action",
+  "version": "0.0.1",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "A GitHub Action to lint OpenAPI files using Redocly's OpenAPI CLI",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
