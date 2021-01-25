@@ -1,11 +1,14 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: Redocly CLI Lint
+description: Lint OpenAPI documents using Redocly CLI
+author: Marc-Andre Giroux
 inputs:
-  milliseconds: # change this
+  entrypoints:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Path to OpenAPI entrypoints to lint'
+  config_file:
+    required: true
+    description: 'Path to redocly linting configuration file'
+    default: '.redocly.yaml'
 runs:
   using: 'node12'
   main: 'dist/index.js'
